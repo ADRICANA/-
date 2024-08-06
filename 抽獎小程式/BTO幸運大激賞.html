@@ -1,553 +1,580 @@
 <!doctype html>
 <html lang="zh-Hant">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>抽獎小程式</title>
+        <link rel="manifest" href="manifest.json" />
+        <style>
+            body {
+                font-family: "Arial", sans-serif;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 78vh;
+                background: url("photo/artificial-intelligence-machine-learning-concept-with-blue-glowing-digital-human-brain-with-convolutions-inside-surrounded-by-neural-net-abstract-dark-background-3d-rendering.jpg")
+                    no-repeat center center fixed;
+                background-size: cover;
+                margin: 13;
+                padding: 0px;
+                box-sizing: border-box;
+            }
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>抽獎小程式</title>
-    <style>
-        body {
-            font-family: "Arial", sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 78vh;
-            background: url("photo/artificial-intelligence-machine-learning-concept-with-blue-glowing-digital-human-brain-with-convolutions-inside-surrounded-by-neural-net-abstract-dark-background-3d-rendering.jpg") no-repeat center center fixed;
-            background-size: cover;
-            margin: 13;
-            padding: 0px;
-            box-sizing: border-box;
-        }
+            .main-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 1200px;
+                background-color: rgba(255, 255, 255, 0.52);
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
 
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            background-color: rgba(255, 255, 255, 0.52);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+            .header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+            .header img {
+                max-width: 200px;
+                height: auto;
+                margin-bottom: 10px;
+            }
 
-        .header img {
-            max-width: 200px;
-            height: auto;
-            margin-bottom: 10px;
-        }
+            .content {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+            }
 
-        .content {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 100%;
-        }
+            .draw-container,
+            .history-process-container {
+                background-color: rgba(255, 255, 255, 0.9);
+                padding: 18px;
+                border-radius: 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                width: 45%;
+            }
 
-        .draw-container,
-        .history-process-container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 18px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            width: 45%;
-        }
+            .history-process-container {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
 
-        .history-process-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+            h1,
+            h2,
+            h3 {
+                font-size: 24px;
+                margin-bottom: 20px;
+                color: #333;
+                text-align: center;
+            }
 
-        h1,
-        h2,
-        h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
-        }
+            input[type="text"],
+            select {
+                width: calc(100% - 22px);
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 16px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: border-color 0.3s;
+            }
 
-        input[type="text"],
-        select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: border-color 0.3s;
-        }
+            input[type="text"]:focus,
+            select:focus {
+                border-color: #007bff;
+                outline: none;
+            }
 
-        input[type="text"]:focus,
-        select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+            button {
+                width: 100%;
+                padding: 12px;
+                margin-top: 10px;
+                border: none;
+                border-radius: 10px;
+                background: linear-gradient(90deg, #22577a, #1461b3);
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+                transition:
+                    background 0.5s,
+                    transform 0.5s,
+                    box-shadow 0.5s;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                display: block;
+            }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #22577a, #1461b3);
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.5s, transform 0.5s, box-shadow 0.5s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            display: block;
-        }
+            .file-input-label {
+                width: 46.8%;
+                padding: 4px;
+                margin-top: 13px;
+                border: none;
+                border-radius: 10px;
+                background: linear-gradient(90deg, #22577a, #1461b3);
+                color: white;
+                font-size: 13px;
+                cursor: pointer;
+                transition:
+                    background 0.5s,
+                    transform 0.5s,
+                    box-shadow 0.5s;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                display: block;
+            }
 
-        .file-input-label {
-            width: 46.8%;
-            padding: 4px;
-            margin-top: 13px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #22577a, #1461b3);
-            color: white;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.5s, transform 0.5s, box-shadow 0.5s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            display: block;
-        }
+            button:hover,
+            .file-input-label:hover {
+                background: linear-gradient(90deg, #1461b3, #001d3d);
+                transform: translateY(-6px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            }
 
-        button:hover,
-        .file-input-label:hover {
-            background: linear-gradient(90deg, #1461b3, #001d3d);
-            transform: translateY(-6px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 20px 0;
+                max-height: 300px;
+                overflow-y: auto;
+                border-top: 1px solid #ddd;
+                border-bottom: 1px solid #ddd;
+            }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 20px 0;
-            max-height: 300px;
-            overflow-y: auto;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-        }
+            li {
+                padding: 8px;
+                margin: 5px 0;
+                background-color: #f9f9f9;
+                border-radius: 5px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
 
-        li {
-            padding: 8px;
-            margin: 5px 0;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+            .winner {
+                font-weight: bold;
+                color: green;
+                font-size: 18px;
+                margin-top: 20px;
+                transition: opacity 0.5s ease-in-out;
+                opacity: 0;
+            }
 
-        .winner {
-            font-weight: bold;
-            color: green;
-            font-size: 18px;
-            margin-top: 20px;
-            transition: opacity 0.5s ease-in-out;
-            opacity: 0;
-        }
-
-        .winner.show {
-            opacity: 1;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .history ul {
-            max-height: 400px;
-            overflow-y: hidden;
-            padding: 0;
-            position: relative;
-        }
-
-        .clear-btn {
-            background: linear-gradient(90deg, #ff6347, #cc5138);
-        }
-
-        .clear-btn:hover {
-            background: linear-gradient(90deg, #cc5138, #ff6347);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .countdown {
-            font-size: 24px;
-            color: #ff6347;
-            margin-top: 20px;
-        }
-
-        .highlight {
-            color: red;
-            font-size: 24px;
-        }
-
-        .draw-animation {
-            font-size: 24px;
-            font-weight: bold;
-            color: #007bff;
-            animation: flash 1s infinite;
-        }
-
-        @keyframes flash {
-            0%,
-            100% {
+            .winner.show {
                 opacity: 1;
             }
 
-            50% {
-                opacity: 0;
-            }
-        }
-
-        .clock {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .volume-control {
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .bg-music-controls {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .bg-music-controls button {
-            width: 48%;
-        }
-
-        @keyframes scroll {
-            0% {
-                top: 0;
+            .hidden {
+                display: none;
             }
 
-            100% {
-                top: -100%;
+            .history ul {
+                max-height: 400px;
+                overflow-y: hidden;
+                padding: 0;
+                position: relative;
             }
-        }
 
-        .history ul {
-            max-height: 400px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .history ul li {
-            position: relative;
-            animation: scroll 10s linear infinite;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            font-size: 14px;
-            color: #fff;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="main-container">
-        <div class="header">
-            <img src="photo/BTO LOGO@72x.png" alt="Logo">
-            <h1>BTO幸運大激賞</h1>
-            <div id="clock" class="clock"></div>
-        </div>
-        <div class="content">
-            <div class="draw-container">
-                <input type="text" id="nameInput" placeholder="輸入抽獎編號">
-                <button onclick="addName()">添加抽獎編號</button>
-                <input type="text" id="prizeInput" placeholder="輸入獎品">
-                <button onclick="addPrize()">添加獎品</button>
-                <label for="fileInput" class="file-input-label">導入名單</label>
-                <input type="file" id="fileInput" accept=".txt" onchange="importNames(event)">
-                <select id="prizeSelect">
-                    <option value="">選擇獎品</option>
-                </select>
-                <button onclick="drawWinner()">抽獎</button>
-                <button class="clear-btn" onclick="clearAll()">清除所有資料</button>
-                <div class="volume-control">
-                    <label for="volume">背景音樂音量:</label>
-                    <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" onchange="setVolume(this.value)">
-                </div>
-                <div class="bg-music-controls">
-                    <button onclick="playMusic()">播放音樂</button>
-                    <button onclick="pauseMusic()">暫停音樂</button>
-                </div>
-                <ul id="nameList" class="fixed-width-list"></ul>
-                <ul id="prizeList" class="fixed-width-list"></ul>
-            </div>
-            <div class="history-process-container">
-                <div class="process-container">
-                    <h3> 幸運攪珠機</h3>
-                    <p id="drawAnimation" class="draw-animation hidden">抽獎中...</p>
-                    <p id="winnerText" class="winner"></p>
-                    <div id="countdown" class="countdown hidden"></div>
-                </div>
-                <div class="history-container">
-                    <h2>得獎記錄</h2>
-                    <ul id="historyList" class="fixed-width-list"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer">
-        Made By <strong>Adrian Cheung</strong><br>
-        Version 1.0
-    </div>
-
-    <audio id="addSound" src="sound effect/mixkit-arcade-game-jump-coin-216.wav"></audio>
-    <audio id="drawSound" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
-    <audio id="winSound" src="sound effect/mixkit-game-level-completed-2059.wav"></audio>
-    <audio id="bgMusic" src="sound effect/alive-emotional-minimal-ambient-piano-inspirational-219418.mp3" loop autoplay></audio>
-
-    <script>
-        let names = [];
-        let prizes = [];
-        let history = [];
-        let countdownInterval;
-
-        document.addEventListener("DOMContentLoaded", () => {
-            names = JSON.parse(localStorage.getItem("names")) || [];
-            prizes = JSON.parse(localStorage.getItem("prizes")) || [];
-            history = JSON.parse(localStorage.getItem("history")) || [];
-            updateNameList();
-            updatePrizeList();
-            updateHistoryList();
-            updatePrizeSelect();
-            startClock();
-            setVolume(document.getElementById("volume").value);
-        });
-
-        function playSound(soundId, startTime = 0, duration = null) {
-            const sound = document.getElementById(soundId);
-            sound.currentTime = startTime;
-            sound.play();
-            if (duration) {
-                setTimeout(() => {
-                    sound.pause();
-                }, duration * 1000);
+            .clear-btn {
+                background: linear-gradient(90deg, #ff6347, #cc5138);
             }
-        }
 
-        function addName() {
-            const nameInput = document.getElementById("nameInput");
-            const name = nameInput.value.trim();
-            if (name && !names.includes(name)) {
-                names.push(name);
-                updateNameList();
-                nameInput.value = "";
-                nameInput.focus();
-                playSound("addSound");
-                localStorage.setItem("names", JSON.stringify(names));
-            } else {
-                alert("請輸入名字或名字已存在");
+            .clear-btn:hover {
+                background: linear-gradient(90deg, #cc5138, #ff6347);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             }
-        }
 
-        function updateNameList() {
-            const nameList = document.getElementById("nameList");
-            nameList.innerHTML = "";
-            names.forEach((name) => {
-                const li = document.createElement("li");
-                li.textContent = name;
-                nameList.appendChild(li);
-            });
-        }
-
-        function addPrize() {
-            const prizeInput = document.getElementById("prizeInput");
-            const prize = prizeInput.value.trim();
-            if (prize && !prizes.includes(prize)) {
-                prizes.push(prize);
-                updatePrizeList();
-                prizeInput.value = "";
-                prizeInput.focus();
-                playSound("addSound");
-                localStorage.setItem("prizes", JSON.stringify(prizes));
-                updatePrizeSelect();
-            } else {
-                alert("請輸入獎品或獎品已存在");
+            .countdown {
+                font-size: 24px;
+                color: #ff6347;
+                margin-top: 20px;
             }
-        }
 
-        function updatePrizeList() {
-            const prizeList = document.getElementById("prizeList");
-            prizeList.innerHTML = "";
-            prizes.forEach((prize) => {
-                const li = document.createElement("li");
-                li.textContent = prize;
-                prizeList.appendChild(li);
-            });
-        }
-
-        function updatePrizeSelect() {
-            const prizeSelect = document.getElementById("prizeSelect");
-            prizeSelect.innerHTML = '<option value="">選擇獎品</option>';
-            prizes.forEach((prize) => {
-                const option = document.createElement("option");
-                option.value = prize;
-                option.textContent = prize;
-                prizeSelect.appendChild(option);
-            });
-        }
-
-        function drawWinner() {
-            if (names.length === 0) {
-                alert("請先添加名字");
-                return;
+            .highlight {
+                color: red;
+                font-size: 24px;
             }
-            const selectedPrize = document.getElementById("prizeSelect").value;
-            if (!selectedPrize) {
-                alert("請選擇一個獎品");
-                return;
-            }
-            startCountdown(3);
-        }
 
-        function startCountdown(seconds) {
-            const countdown = document.getElementById("countdown");
-            countdown.textContent = seconds;
-            countdown.classList.remove("hidden");
-            countdownInterval = setInterval(() => {
-                seconds--;
-                if (seconds <= 0) {
-                    clearInterval(countdownInterval);
-                    countdown.classList.add("hidden");
-                    performDraw();
-                } else {
-                    countdown.textContent = seconds;
+            .draw-animation {
+                font-size: 24px;
+                font-weight: bold;
+                color: #007bff;
+                animation: flash 1s infinite;
+            }
+
+            @keyframes flash {
+                0%,
+                100% {
+                    opacity: 1;
                 }
-            }, 1000);
-        }
 
-        function performDraw() {
-            playSound("drawSound", 0, 3); // 播放 drawSound，持續 3 秒
-            const drawAnimation = document.getElementById("drawAnimation");
-            drawAnimation.classList.remove("hidden");
-            setTimeout(() => {
-                const winnerIndex = Math.floor(Math.random() * names.length);
-                const selectedPrize = document.getElementById("prizeSelect").value;
-                const winnerName = names[winnerIndex];
-                const winnerText = document.getElementById("winnerText");
-                winnerText.textContent = `恭喜 ${winnerName} 獲得 ${selectedPrize}！`;
-                winnerText.classList.add("show");
-                drawAnimation.classList.add("hidden");
-                playSound("winSound");
-                setTimeout(() => {
-                    winnerText.classList.remove("show");
-                }, 3000);
-                addHistory(winnerName, selectedPrize);
-                names.splice(winnerIndex, 1); // 移除中獎者
-                updateNameList();
-                localStorage.setItem("names", JSON.stringify(names));
-            }, 3000); // 抽獎過程持續3秒
-        }
-
-        function addHistory(name, prize) {
-            history.push({
-                name: name,
-                prize: prize
-            });
-            updateHistoryList();
-            localStorage.setItem("history", JSON.stringify(history));
-        }
-
-        function updateHistoryList() {
-            const historyList = document.getElementById("historyList");
-            historyList.innerHTML = "";
-            history.forEach((record) => {
-                const li = document.createElement("li");
-                li.textContent = `${record.name} 獲得 ${record.prize}`;
-                historyList.appendChild(li);
-            });
-        }
-
-        function clearAll() {
-            if (confirm("確定要清除所有資料嗎？")) {
-                names = [];
-                prizes = [];
-                history = [];
-                updateNameList();
-                updatePrizeList();
-                updateHistoryList();
-                localStorage.removeItem("names");
-                localStorage.removeItem("prizes");
-                localStorage.removeItem("history");
-                alert("所有資料已清除");
+                50% {
+                    opacity: 0;
+                }
             }
-        }
 
-        function startClock() {
-            const clockElement = document.getElementById("clock");
-            setInterval(() => {
-                const now = new Date();
-                const hours = String(now.getUTCHours() + 8).padStart(2, "0"); // UTC+8 for Hong Kong time
-                const minutes = String(now.getUTCMinutes()).padStart(2, "0");
-                const seconds = String(now.getUTCSeconds()).padStart(2, "0");
-                clockElement.textContent = `本地時間: ${hours}:${minutes}:${seconds}`;
-            }, 1000);
-        }
+            .clock {
+                font-size: 24px;
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        function importNames(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const text = e.target.result;
-                    names = text
-                        .split("\n")
-                        .map((name) => name.trim())
-                        .filter((name) => name);
+            #fileInput {
+                display: none;
+            }
+
+            .volume-control {
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            .bg-music-controls {
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .bg-music-controls button {
+                width: 48%;
+            }
+
+            @keyframes scroll {
+                0% {
+                    top: 0;
+                }
+
+                100% {
+                    top: -100%;
+                }
+            }
+
+            .history ul {
+                max-height: 400px;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .history ul li {
+                position: relative;
+                animation: scroll 10s linear infinite;
+            }
+
+            .footer {
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                font-size: 14px;
+                color: #fff;
+                background: rgba(0, 0, 0, 0.5);
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="main-container">
+            <div class="header">
+                <img src="photo/BTO LOGO@72x.png" alt="Logo" />
+                <h1>BTO幸運大激賞</h1>
+                <div id="clock" class="clock"></div>
+            </div>
+            <div class="content">
+                <div class="draw-container">
+                    <input type="text" id="nameInput" placeholder="輸入抽獎編號" />
+                    <button onclick="addName()">添加抽獎編號</button>
+                    <input type="text" id="prizeInput" placeholder="輸入獎品" />
+                    <button onclick="addPrize()">添加獎品</button>
+                    <label for="fileInput" class="file-input-label">導入名單</label>
+                    <input type="file" id="fileInput" accept=".txt" onchange="importNames(event)" />
+                    <select id="prizeSelect">
+                        <option value="">選擇獎品</option>
+                    </select>
+                    <button onclick="drawWinner()">抽獎</button>
+                    <button class="clear-btn" onclick="clearAll()">清除所有資料</button>
+                    <div class="volume-control">
+                        <label for="volume">背景音樂音量:</label>
+                        <input
+                            type="range"
+                            id="volume"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value="0.5"
+                            onchange="setVolume(this.value)" />
+                    </div>
+                    <div class="bg-music-controls">
+                        <button onclick="playMusic()">播放音樂</button>
+                        <button onclick="pauseMusic()">暫停音樂</button>
+                    </div>
+                    <ul id="nameList" class="fixed-width-list"></ul>
+                    <ul id="prizeList" class="fixed-width-list"></ul>
+                </div>
+                <div class="history-process-container">
+                    <div class="process-container">
+                        <h3>幸運攪珠機</h3>
+                        <p id="drawAnimation" class="draw-animation hidden">抽獎中...</p>
+                        <p id="winnerText" class="winner"></p>
+                        <div id="countdown" class="countdown hidden"></div>
+                    </div>
+                    <div class="history-container">
+                        <h2>得獎記錄</h2>
+                        <ul id="historyList" class="fixed-width-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            Made By <strong>Adrian Cheung</strong><br />
+            Version 1.0
+        </div>
+
+        <audio id="addSound" src="sound effect/mixkit-arcade-game-jump-coin-216.wav"></audio>
+        <audio id="drawSound" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
+        <audio id="winSound" src="sound effect/mixkit-game-level-completed-2059.wav"></audio>
+        <audio
+            id="bgMusic"
+            src="sound effect/alive-emotional-minimal-ambient-piano-inspirational-219418.mp3"
+            loop
+            autoplay></audio>
+
+        <script>
+                let names = [];
+                let prizes = [];
+                let history = [];
+                let countdownInterval;
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    names = JSON.parse(localStorage.getItem("names")) || [];
+                    prizes = JSON.parse(localStorage.getItem("prizes")) || [];
+                    history = JSON.parse(localStorage.getItem("history")) || [];
                     updateNameList();
-                    localStorage.setItem("names", JSON.stringify(names));
-                };
-                reader.readAsText(file);
+                    updatePrizeList();
+                    updateHistoryList();
+                    updatePrizeSelect();
+                    startClock();
+                    setVolume(document.getElementById("volume").value);
+                });
+
+                function playSound(soundId, startTime = 0, duration = null) {
+                    const sound = document.getElementById(soundId);
+                    sound.currentTime = startTime;
+                    sound.play();
+                    if (duration) {
+                        setTimeout(() => {
+                            sound.pause();
+                        }, duration * 1000);
+                    }
+                }
+
+                function addName() {
+                    const nameInput = document.getElementById("nameInput");
+                    const name = nameInput.value.trim();
+                    if (name && !names.includes(name)) {
+                        names.push(name);
+                        updateNameList();
+                        nameInput.value = "";
+                        nameInput.focus();
+                        playSound("addSound");
+                        localStorage.setItem("names", JSON.stringify(names));
+                    } else {
+                        alert("請輸入名字或名字已存在");
+                    }
+                }
+
+                function updateNameList() {
+                    const nameList = document.getElementById("nameList");
+                    nameList.innerHTML = "";
+                    names.forEach((name) => {
+                        const li = document.createElement("li");
+                        li.textContent = name;
+                        nameList.appendChild(li);
+                    });
+                }
+
+                function addPrize() {
+                    const prizeInput = document.getElementById("prizeInput");
+                    const prize = prizeInput.value.trim();
+                    if (prize && !prizes.includes(prize)) {
+                        prizes.push(prize);
+                        updatePrizeList();
+                        prizeInput.value = "";
+                        prizeInput.focus();
+                        playSound("addSound");
+                        localStorage.setItem("prizes", JSON.stringify(prizes));
+                        updatePrizeSelect();
+                    } else {
+                        alert("請輸入獎品或獎品已存在");
+                    }
+                }
+
+                function updatePrizeList() {
+                    const prizeList = document.getElementById("prizeList");
+                    prizeList.innerHTML = "";
+                    prizes.forEach((prize) => {
+                        const li = document.createElement("li");
+                        li.textContent = prize;
+                        prizeList.appendChild(li);
+                    });
+                }
+
+                function updatePrizeSelect() {
+                    const prizeSelect = document.getElementById("prizeSelect");
+                    prizeSelect.innerHTML = '<option value="">選擇獎品</option>';
+                    prizes.forEach((prize) => {
+                        const option = document.createElement("option");
+                        option.value = prize;
+                        option.textContent = prize;
+                        prizeSelect.appendChild(option);
+                    });
+                }
+
+                function drawWinner() {
+                    if (names.length === 0) {
+                        alert("請先添加名字");
+                        return;
+                    }
+                    const selectedPrize = document.getElementById("prizeSelect").value;
+                    if (!selectedPrize) {
+                        alert("請選擇一個獎品");
+                        return;
+                    }
+                    startCountdown(3);
+                }
+
+                function startCountdown(seconds) {
+                    const countdown = document.getElementById("countdown");
+                    countdown.textContent = seconds;
+                    countdown.classList.remove("hidden");
+                    countdownInterval = setInterval(() => {
+                        seconds--;
+                        if (seconds <= 0) {
+                            clearInterval(countdownInterval);
+                            countdown.classList.add("hidden");
+                            performDraw();
+                        } else {
+                            countdown.textContent = seconds;
+                        }
+                    }, 1000);
+                }
+
+                function performDraw() {
+                    playSound("drawSound", 0, 3); // 播放 drawSound，持續 3 秒
+                    const drawAnimation = document.getElementById("drawAnimation");
+                    drawAnimation.classList.remove("hidden");
+                    setTimeout(() => {
+                        const winnerIndex = Math.floor(Math.random() * names.length);
+                        const selectedPrize = document.getElementById("prizeSelect").value;
+                        const winnerName = names[winnerIndex];
+                        const winnerText = document.getElementById("winnerText");
+                        winnerText.textContent = `恭喜 ${winnerName} 獲得 ${selectedPrize}！`;
+                        winnerText.classList.add("show");
+                        drawAnimation.classList.add("hidden");
+                        playSound("winSound");
+                        setTimeout(() => {
+                            winnerText.classList.remove("show");
+                        }, 3000);
+                        addHistory(winnerName, selectedPrize);
+                        names.splice(winnerIndex, 1); // 移除中獎者
+                        updateNameList();
+                        localStorage.setItem("names", JSON.stringify(names));
+                    }, 3000); // 抽獎過程持續3秒
+                }
+
+                function addHistory(name, prize) {
+                    history.push({
+                        name: name,
+                        prize: prize
+                    });
+                    updateHistoryList();
+                    localStorage.setItem("history", JSON.stringify(history));
+                }
+
+                function updateHistoryList() {
+                    const historyList = document.getElementById("historyList");
+                    historyList.innerHTML = "";
+                    history.forEach((record) => {
+                        const li = document.createElement("li");
+                        li.textContent = `${record.name} 獲得 ${record.prize}`;
+                        historyList.appendChild(li);
+                    });
+                }
+
+                function clearAll() {
+                    if (confirm("確定要清除所有資料嗎？")) {
+                        names = [];
+                        prizes = [];
+                        history = [];
+                        updateNameList();
+                        updatePrizeList();
+                        updateHistoryList();
+                        localStorage.removeItem("names");
+                        localStorage.removeItem("prizes");
+                        localStorage.removeItem("history");
+                        alert("所有資料已清除");
+                    }
+                }
+
+                function startClock() {
+                    const clockElement = document.getElementById("clock");
+                    setInterval(() => {
+                        const now = new Date();
+                        const hours = String(now.getUTCHours() + 8).padStart(2, "0"); // UTC+8 for Hong Kong time
+                        const minutes = String(now.getUTCMinutes()).padStart(2, "0");
+                        const seconds = String(now.getUTCSeconds()).padStart(2, "0");
+                        clockElement.textContent = `本地時間: ${hours}:${minutes}:${seconds}`;
+                    }, 1000);
+                }
+
+                function importNames(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const text = e.target.result;
+                            names = text
+                                .split("\n")
+                                .map((name) => name.trim())
+                                .filter((name) => name);
+                            updateNameList();
+                            localStorage.setItem("names", JSON.stringify(names));
+                        };
+                        reader.readAsText(file);
+                    }
+                }
+
+                function setVolume(volume) {
+                    const bgMusic = document.getElementById("bgMusic");
+                    bgMusic.volume = volume;
+                }
+
+                function playMusic() {
+                    const bgMusic = document.getElementById("bgMusic");
+                    bgMusic.play();
+                }
+
+                function pauseMusic() {
+                    const bgMusic = document.getElementById("bgMusic");
+                    bgMusic.pause();
+                }
+                <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
             }
-        }
-
-        function setVolume(volume) {
-            const bgMusic = document.getElementById("bgMusic");
-            bgMusic.volume = volume;
-        }
-
-        function playMusic() {
-            const bgMusic = document.getElementById("bgMusic");
-            bgMusic.play();
-        }
-
-        function pauseMusic() {
-            const bgMusic = document.getElementById("bgMusic");
-            bgMusic.pause();
-        }
-    </script>
-</body>
-
+        </script>
+    </body>
 </html>
